@@ -1,0 +1,48 @@
+name: Daily ingestion
+
+on:
+  schedule:
+    # Weekdays 16:30 UTC - after the ECB publishes reference rates
+    # (~16:00 CET). Eurostat monthly updates are picked up along the way.
+    - cron: "30 16 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write # required for Workload Identity Federation
+
+jobs:
+  ingest-and-transform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Exchange the GitHub OIDC token for short-lived credentials of the
+      # ingestion service account - no key files stored anywhere.
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/258839316504/locations/global/workloadIdentityPools/github-actions/providers/github-oidc
+          service_account: econ-ingestion@eu-econ-data-platform.iam.gserviceaccount.com
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Ingest into Cloud SQL (idempotent upserts)
+        env:
+          DB_IAM_USER: econ-ingestion@eu-econ-data-platform.iam
+        # Rolling 10-day FX window + 24 Eurostat periods: upserts make
+        # overlaps harmless, and revisions get picked up.
+        run: python -m ingestion.main --sink cloudsql --last-n 10 --last-periods 24
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install -g @dataform/cli
+
+      - name: Run Dataform pipeline (sync + staging + marts + assertions)
+        working-directory: dataform
+        run: |
+          echo '{"projectId": "eu-econ-data-platform", "location": "europe-west3"}' > .df-credentials.json
+          dataform run
