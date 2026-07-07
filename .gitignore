@@ -17,6 +17,11 @@ PROJECT_LOG.txt
 *.json.key
 credentials/
 
+# Dataform
+dataform/.df-credentials.json
+dataform/node_modules/
+dataform/.dataform/
+
 # Terraform
 terraform/.terraform/
 terraform/*.tfstate

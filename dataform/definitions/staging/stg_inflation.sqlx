@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  description: "HICP inflation with time_period parsed to a proper month date."
+}
+
+SELECT
+  geo,
+  PARSE_DATE('%Y-%m', time_period) AS month,
+  CAST(value AS FLOAT64) AS inflation_yoy_pct
+FROM ${ref("inflation")}

@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  schema: "raw",
+  description: "Daily ECB euro FX reference rates, synced from Cloud SQL via the federated connection."
+}
+
+SELECT date, currency, rate, loaded_at
+FROM EXTERNAL_QUERY(
+  "eu-econ-data-platform.europe-west3.econ-cloudsql",
+  "SELECT date, currency, rate, loaded_at FROM raw.fx_rates"
+)

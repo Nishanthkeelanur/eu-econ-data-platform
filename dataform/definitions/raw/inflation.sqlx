@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  schema: "raw",
+  description: "Eurostat HICP inflation (annual rate of change), synced from Cloud SQL."
+}
+
+SELECT geo, time_period, value, loaded_at
+FROM EXTERNAL_QUERY(
+  "eu-econ-data-platform.europe-west3.econ-cloudsql",
+  "SELECT geo, time_period, value, loaded_at FROM raw.inflation"
+)

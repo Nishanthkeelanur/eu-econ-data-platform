@@ -1,0 +1,5 @@
+dataformCoreVersion: 3.0.61
+defaultProject: eu-econ-data-platform
+defaultLocation: europe-west3
+defaultDataset: staging
+defaultAssertionDataset: dataform_assertions

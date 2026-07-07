@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  description: "Unemployment rate with time_period parsed to a proper month date."
+}
+
+SELECT
+  geo,
+  PARSE_DATE('%Y-%m', time_period) AS month,
+  CAST(value AS FLOAT64) AS unemployment_rate_pct
+FROM ${ref("unemployment")}

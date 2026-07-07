@@ -55,10 +55,10 @@ Writes tidy CSVs (one per dataset) to `data/` and prints a row-count summary.
   bucket, Cloud SQL PostgreSQL with IAM-only auth, least-privilege service
   accounts, billing kill-switch); ingestion writes idempotent upserts to
   Cloud SQL via the Cloud SQL connector.
-- [ ] **Phase 2 — Analytics layer (week 2):** BigQuery datasets + scheduled
-  Cloud SQL → BigQuery sync (federated query); Dataform staging views and
-  reporting marts (FX daily/monthly aggregates, inflation vs unemployment
-  by country); assertions for data quality.
+- [x] **Phase 2 — Analytics layer:** BigQuery datasets + Cloud SQL →
+  BigQuery sync via a federated connection (`EXTERNAL_QUERY`); Dataform
+  staging views and reporting marts (monthly FX aggregates, inflation vs
+  unemployment by country); data-quality assertions, all passing.
 - [ ] **Phase 3 — Automation & polish (week 3):** GitHub Actions CI (lint,
   tests, terraform plan on PR), scheduled daily ingestion workflow with
   Workload Identity Federation (no long-lived keys), Looker Studio dashboard,

@@ -37,3 +37,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA raw
 ALTER DEFAULT PRIVILEGES IN SCHEMA raw
     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES
     TO "econ-ingestion@eu-econ-data-platform.iam", "keelanurnishanth@gmail.com";
+
+-- Read-only access for the BigQuery federated connection user
+-- (created by terraform/bigquery.tf).
+GRANT USAGE ON SCHEMA raw TO bq_reader;
+GRANT SELECT ON ALL TABLES IN SCHEMA raw TO bq_reader;
+ALTER DEFAULT PRIVILEGES IN SCHEMA raw GRANT SELECT ON TABLES TO bq_reader;

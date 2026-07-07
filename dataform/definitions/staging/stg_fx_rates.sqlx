@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  description: "FX rates with typed columns; one row per TARGET business day and currency."
+}
+
+SELECT
+  date,
+  currency,
+  CAST(rate AS FLOAT64) AS rate
+FROM ${ref("fx_rates")}

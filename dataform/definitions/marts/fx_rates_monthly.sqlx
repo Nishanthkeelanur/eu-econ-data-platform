@@ -1,0 +1,19 @@
+config {
+  type: "table",
+  schema: "marts",
+  description: "Monthly FX aggregates per currency vs EUR.",
+  assertions: {
+    uniqueKey: ["month", "currency"],
+    nonNull: ["month", "currency", "avg_rate"]
+  }
+}
+
+SELECT
+  DATE_TRUNC(date, MONTH) AS month,
+  currency,
+  ROUND(AVG(rate), 5) AS avg_rate,
+  MIN(rate) AS min_rate,
+  MAX(rate) AS max_rate,
+  COUNT(*) AS trading_days
+FROM ${ref("stg_fx_rates")}
+GROUP BY month, currency

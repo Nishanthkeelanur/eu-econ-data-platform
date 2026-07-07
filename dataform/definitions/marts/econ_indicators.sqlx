@@ -1,0 +1,17 @@
+config {
+  type: "table",
+  schema: "marts",
+  description: "Inflation vs unemployment by country and month - the core reporting table.",
+  assertions: {
+    uniqueKey: ["geo", "month"]
+  }
+}
+
+SELECT
+  geo,
+  month,
+  i.inflation_yoy_pct,
+  u.unemployment_rate_pct
+FROM ${ref("stg_inflation")} AS i
+FULL OUTER JOIN ${ref("stg_unemployment")} AS u
+USING (geo, month)
