@@ -51,9 +51,10 @@ Writes tidy CSVs (one per dataset) to `data/` and prints a row-count summary.
 
 - [x] **Phase 0 — Extractors (local):** repo scaffold; ECB + Eurostat clients
   parsing SDMX-JSON / JSON-stat into tidy records; CLI writing CSVs.
-- [ ] **Phase 1 — Landing zone (week 1):** Terraform foundation (GCS state
-  bucket, Cloud SQL PostgreSQL, service accounts, least-privilege IAM);
-  ingestion writes idempotent upserts to Cloud SQL with load metadata.
+- [x] **Phase 1 — Landing zone:** Terraform foundation (GCS state
+  bucket, Cloud SQL PostgreSQL with IAM-only auth, least-privilege service
+  accounts, billing kill-switch); ingestion writes idempotent upserts to
+  Cloud SQL via the Cloud SQL connector.
 - [ ] **Phase 2 — Analytics layer (week 2):** BigQuery datasets + scheduled
   Cloud SQL → BigQuery sync (federated query); Dataform staging views and
   reporting marts (FX daily/monthly aggregates, inflation vs unemployment
