@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Local data outputs
+data/
+
+# Secrets & env
+.env
+*.json.key
+credentials/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/*.tfvars
+!terraform/example.tfvars
+terraform/.terraform.lock.hcl
+
+# IDE / OS
+.idea/
+.vscode/
+Thumbs.db
