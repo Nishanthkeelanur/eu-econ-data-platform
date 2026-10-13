@@ -59,7 +59,7 @@ Writes tidy CSVs (one per dataset) to `data/` and prints a row-count summary.
   BigQuery sync via a federated connection (`EXTERNAL_QUERY`); Dataform
   staging views and reporting marts (monthly FX aggregates, inflation vs
   unemployment by country); data-quality assertions, all passing.
-- [ ] **Phase 3 — Automation & polish (week 3):** GitHub Actions CI (lint,
+- [x] **Phase 3 — Automation & polish (week 3):** GitHub Actions CI (lint,
   tests, terraform plan on PR), scheduled daily ingestion workflow with
   Workload Identity Federation (no long-lived keys), Looker Studio dashboard,
   architecture docs.
